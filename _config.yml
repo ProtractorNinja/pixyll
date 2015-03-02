@@ -4,7 +4,7 @@ email:       austin@angerson.org
 author:      Austin Anderson
 description: "I'm not as angry as you might expect."
 baseurl:     ""
-url:         ""
+url:         "/"
 
 # Google analytics
 google_analytics:
