@@ -1,10 +1,10 @@
 # Site settings
-title:       Pixyll
-email:       your_email@example.com
-author:      John Otander
-description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
+title:       Protractor Ninja!
+email:       austin@angerson.org
+author:      Austin Anderson
+description: "I'm not as angry as you might expect."
 baseurl:     ""
-url:         "http://pixyll.com"
+url:         ""
 
 # Google analytics
 google_analytics:
@@ -19,12 +19,12 @@ show_post_footers:  false
 disqus_shortname:
 
 # Social icons
-show_social_icons: false
-github_username:
-stackoverflow_id:
-twitter_username:
+show_social_icons: true
+github_username: ProtractorNinja
+stackoverflow_id: 2259675/protractor-ninja
+twitter_username: ProtractorNinja
 google_plus_id:
-linkedin_username:
+linkedin_username: protractorninja
 bitcoin_url:
 paypal_url:
 flattr_button:
