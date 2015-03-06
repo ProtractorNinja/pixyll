@@ -1,7 +1,7 @@
 ---
 title: The Birth of a Blog
 layout: post
-summary: An obligatory welcome post.
+summary: An obligatory welcome post, but with server anatomy and system schematics. Explains how the whole site is set up, if you're curious.
 ---
 
 I'm starting a blog[^1] for the obvious reasons. It's a great way to share all the rad stuff I've been doing, when bragging to my friends just doesn't cut it. All the cool kids are blogging these days, anyway; I can't be cool if I'm not blogging, right?
