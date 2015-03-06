@@ -31,6 +31,7 @@ flattr_button:
 
 # Build settings
 markdown:     redcarpet
+future:       false
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data', 'footnotes', 'highlight', 'strikethrough']
 permalink:    pretty
