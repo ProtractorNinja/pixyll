@@ -4,7 +4,7 @@ email:       austin@angerson.org
 author:      Austin Anderson
 description: Code and words from Austin Anderson.
 baseurl:     ""
-url:         "/"
+url:         "http://protractor.ninja/"
 
 # Google analytics
 google_analytics:
