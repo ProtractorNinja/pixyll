@@ -30,7 +30,7 @@ What happens when you mix a script script with a compiler compiler?
 
 ## A Challenger Approaches
 
-One of my class assignments at Clemson this semester (Spring 2015) was to build a scanner and parser for simple 2D paths using Flex (the scanning) and Bison (the parsing). The paths, formatted as string input, would generally look like this:
+One of my class assignments at Clemson this semester (Spring 2015) was to build a scanner and parser for simple 2D paths using Flex for the scanning and Bison for the parsing. The paths, formatted as string input, would generally look like this:
 
 ```
 unudlrnnnud // up, up, no movement, down, left, right...
@@ -93,12 +93,14 @@ Naturally, all of that is useless just sitting in a file; which brings me to...
 
 ### Going Batty, or How I Handled Unit Testing
 
-Rather than write my own testing scripts, I turned to Google and found [Bats][bats], a lovely little testing framework for Bash. To automatically generate bats test cases from my `*.in` files, I wrote a horrendously ugly shell script called `build-bats.sh`:
+Rather than write my own testing scripts, I turned to Google and found [Bats][bats], a lovely little testing framework for Bash. With Bats' help, I effectively wrote a shell script that would generate a shell script to verify that every test case in my `*.in` files produced proper output when run with my program.
+
+The enabler to this terrifying process would be a horrendously ugly shell script called `build-bats.sh`:
 
 {% highlight bash %}
 
 #!/usr/bin/env bash
-NAME=motion.bats
+NAME=motion.bats # Honestly, I'm not sure why I added this variable but never used it.
 
 echo "#!/usr/bin/env bats" > motion.bats
 
@@ -122,7 +124,7 @@ done
 
 {% endhighlight %}
 
-Running `build-bats.sh` would subsequently build `motion.bats`, with a unique test case for every test from my input files. Thanks to my standard prefixes, it was pretty easy to automatically indicate which output file to check against:
+Running `build-bats.sh` would produce `motion.bats`, a long file that looked something like this:
 
 {% highlight bash %}
 
@@ -138,17 +140,23 @@ function check {
   [ $status -eq 0 ]
 }
 
-@test "nuunllrn" {
-  echo '"nuunllrn"' should be "valid".
-  run check "$BATS_TEST_DESCRIPTION" valid
+@test "n56rl" {
+  echo '"n56rl"' should be "closed".
+  run check "$BATS_TEST_DESCRIPTION" closed
   [ $status -eq 0 ]
 }
 
-...
+@test "_hotnsebu_" {
+  echo '"_hotnsebu_"' should be "invalid".
+  run check "$BATS_TEST_DESCRIPTION" invalid
+  [ $status -eq 0 ]
+}
+
+# ...etc.
 
 {% endhighlight %}
 
-Then, running `bats motion.bats` generates output that looks a lot like this:
+And finally, executing `bats motion.bats` yielded a deliciously comprehensive fruit of validity:
 
 ```
 1..24
@@ -178,13 +186,11 @@ ok 23 \nrl
 ok 24 rl\n
 ```
 
-TODO: note escapes to make sure every whitespace bit is accounted for
-
-That takes care of the verification part. What about generating the log?
-
 ### Logging
 
-I wrote a logging script a lot like the bats script:
+Log generation wasn't quite so meta: I wrote a script to run all of my test cases, format them as if the text was an interactive shell session, and shove the text was in `motion.log`.
+
+`generate-log.sh` handled the heavy lifting:
 
 {% highlight bash %}
 
@@ -202,7 +208,7 @@ done
 exit 0
 {% endhighlight %}
 
-It outputs exactly what I want it to:
+...and boy, did it do good work:
 
 ```
 $ echo "lllll" | ./motion
@@ -213,7 +219,6 @@ $ echo "lllll" | ./motion
 ***** congratulations *****
 ***** scan/parse for valid motion path successful *****
 
-...
 
 $ echo "ludr" | ./motion
 
@@ -223,7 +228,6 @@ $ echo "ludr" | ./motion
 ***** congratulations *****
 ***** valid motion path AND CLOSED PATH *****
 
-...
 
 $ echo " uu6" | ./motion
 
@@ -233,28 +237,12 @@ syntax error
 
 ```
 
-### Putting it All Together
-
-I have a makefile with both of these:
-
-```
-# Run with "make test". Best test everything!
-test: all
-	./build-bats.sh
-	bats motion.bats
-```
-
-```
-verify: ama2-SDE1.zip
-	rm -rf $@
-	unzip -d $@ $<
-	cp generate-log.sh yyerror.c buildit invalid.* closed.* valid.* $@
-	cd $@ && ./buildit motion && \
-		diff <(./generate-log.sh) ../motion.log && echo -e "\nYou are good!"
-```
-
 ## Reflection
 
-Nothing yet!
+The scripts, combined in a lovingly usable Makefile, performed admirably... *eventually*. You may have noticed the abundance of awkward script quoting that I had to do in my shell scripts; a painful side effect of writing bash to generate *more bash*.
+
+One memorable annoyance was figuring out how to keep `echo` from stripping intentional whitespace around my strings. Another was properly including newline characters in the strings to test. Yet another, perhaps my favorite, was resolving the differences between single and double quotes to actually print the strings that I wanted to see. All those and more were the reasons I decided to try out Python for my next class project.
+
+In the end, I got a perfect score. Great!
 
 [bats]: https://github.com/sstephenson/bats
