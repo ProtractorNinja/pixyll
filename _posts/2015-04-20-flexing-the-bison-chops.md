@@ -32,6 +32,8 @@ My thoughts at the beginning of the project went something like this:
 - I want to be able to create a ready-to-submit zip archive (containing my sources, a readme, and the log) whenever I want to, very quickly.
 - I should track the whole thing under version control, just in case something terrible happens.
 
+The last point was easily accomplished with Git, my favorite version control system, but the solution to the rest took a little more work.
+
 Now, without sharing any core project code (which would walking a little _too_ close to the academic dishonesty line), here's how I did all that.
 
 ## A Solution Detailed
@@ -230,7 +232,7 @@ syntax error
 
 ## Reflection
 
-The scripts, combined in a lovingly usable Makefile, performed admirably... *eventually*. You may have noticed all the awkward script quoting that I had to do to make my scripts work: a painful side effect of writing bash to generate *more bash*.
+The scripts, combined with a lovingly usable Makefile that tested, logged, and zipped everything up, performed admirably... *eventually*. You may have noticed all the awkward script quoting that I had to do to make my scripts work: a painful side effect of writing bash to generate *more bash*.
 
 One memorable annoyance was figuring out how to keep `echo` from stripping intentional whitespace around my strings. Another was properly including newline characters in the strings to test. Yet another, perhaps my favorite, was resolving the differences between single and double quotes to finally print the strings that I wanted to see.
 
