@@ -11,7 +11,7 @@ My scripts are largely unchanged from how I ended up using them, except for a fe
 
 ## A Challenge Presented
 
-One of my class assignments at Clemson during the Spring 2015 semester was to build a scanner and parser for simple 2D movement paths. Flex would would handle the scanning, and Bison the parsing. The paths, formatted as string input, would generally look like this:
+One of my class assignments at Clemson during the Spring 2015 semester was to build a command-line parser to determine the validity of simple 2D movement paths. Flex would would handle the scanning, and Bison the parsing. The paths, formatted as string input, would generally look like this:
 
 ```
 unudlrnnnud // up, up, no movement, down, left, right...
@@ -20,11 +20,23 @@ udlrx       // up, down, left, right, illegal character: syntax error!
 udlr        // a closed path, deserving of recognition
 ```
 
-My program, run with a single input string on `stdin`, was supposed to echo a generic header, parse the path, and print a result that indicated whether the path was a plain old path or a special closed path. Upon detection of illegal input, the program would eschew the result and cry `syntax error`.
+My program, run with a single input string on `stdin`, was supposed to echo a generic header, parse the path, and print a result that indicated whether the path was a plain old path or a special closed path. Upon detection of illegal input, the program would eschew the result and cry `syntax error`. Here's a full example, with a program call from bash, the header, and a non-looping success report:
 
-The most tedious part of the assignment? My ultimate submission archive had to contain `motion.log`, a file containing at least five demonstrations of program correctness for each type of path (valid, closed, and invalid).
+```
+$ echo "u33" | ./motion
 
-My thoughts at the beginning of the project went something like this:
+Motion Trajectory Checker (Scanner/Parser)
+CPSC/ECE 3520 Spring 2015
+
+***** congratulations *****
+***** scan/parse for valid motion path successful *****
+```
+
+My program was to be validated against my instructor's version of the code by a series of unspecified test cases. The class wasn't really given an explicit, concrete specification for what to expect with test cases -- some ambiguities that were eventually resolved by our instructor included how to handle extra whitespace[^1], zero-length segments (e.g. `u3d0`), and how spacing on the output should look. Our professor (for better or for worse) took the stance of "if your program works for reasonable test cases, I don't care".
+
+The most tedious part of the assignment? My ultimate submission archive had to contain `motion.log`, a file containing at least five demonstrations of program correctness for each type of path (valid, closed, and invalid) -- basically the above example times fifteen. Definitely not fun to copy and paste.
+
+To summarize my thoughts at the beginning of the project, I was planning something like this:
 
 - I want to automate building the log, so that if I want to add, remove or change any test cases I can regenerate it *without* doing a ton of typing.
 - My program's output formatting should be totally accurate, just in case my instructor's testing script was designed to be particularly draconian (it wasn't).
@@ -206,8 +218,8 @@ exit 0
 ```
 $ echo "lllll" | ./motion
 
- Motion Trajectory Checker (Scanner/Parser)
- CPSC/ECE 3520 Spring 2015
+Motion Trajectory Checker (Scanner/Parser)
+CPSC/ECE 3520 Spring 2015
 
 ***** congratulations *****
 ***** scan/parse for valid motion path successful *****
@@ -240,4 +252,6 @@ You can probably see why I decided to use Python to fulfill my next project's sc
 
 In the end, I got a perfect score. Great!
 
+[^1]: This bit a lot of people. The project grader ran tests via input redirection from a file, e.g. `./motion < uuulr`, where `uuulr` is a text file containing just those letters... *and* a newline. Most of the ways to write text to a file on Unix-like systems will slap a single newline character at the end of every line, but it's usually hard to be sure (and often hard to guess that newlines will raise a problem[^2]). Many of my classmates' projects didn't account for a single trailing newline after the input string (technically, a newline was an illegal character anyway), so there were a lot of low grades until a dozen people brought the issue to the professor's attention.
+[^2]: I once failed a project until the professor and I realized that the `zsh` version of `echo` and the `bash` version of `echo` don't do trailing newlines the same way by default.
 [bats]: https://github.com/sstephenson/bats
