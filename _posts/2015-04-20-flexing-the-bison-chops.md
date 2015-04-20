@@ -1,7 +1,7 @@
 ---
 title: Flexing the Bison Chops
 layout: post
-date: Mon Apr 20 13:26:35 EDT 2015
+date: Mon Apr 20 14:15:02 EDT 2015
 summary: How I automated testing, building and logging a Flex and Bison project.
 ---
 
