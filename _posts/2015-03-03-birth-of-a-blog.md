@@ -10,7 +10,7 @@ Making a blog is also an excellent way to put to use all the domains that I keep
 
 In particular, I made *this* blog because I wanted to make a site that catered to my hacking habits. Wordpress? Please. The site is hosted on a small [DigitalOcean][do] VPS (thanks to credit from [GitHub's Student Pack][student]), statically powered by [Jekyll][jekyll].
 
-Thanks to Jekyll, I can compose all of my pages and posts in Vim[^2] as Markdown files, and when I'm ready to deploy an update, I just `git push` my blog's repo up to the VPS. There's a [post-receive hook][hook] there that tells Jekyll to chop, shred, bake and broil my assortment of posts, settings, and templates into the digital delicacy you see here. Apache serves it up, and we're ready to go. I even found a Jekyll `fortune` [plugin][fortune], for a build-dependent error on the [404 page][404].
+Thanks to Jekyll, I can compose all of my pages and posts in Vim[^2] as Markdown files, and when I'm ready to deploy an update, I just `git push` my blog's repo up to the VPS. There's a [post-receive hook][hook] there that tells Jekyll to chop, shred, bake and broil my assortment of posts, settings, and templates into the digital delicacy you see here. <del>Apache</del> Nginx serves it up, and we're ready to go. I even found a Jekyll `fortune` [plugin][fortune], for a build-dependent error on the [404 page][404].
 
 Even though I'm not hosting the site with [Pages][pages], I'm using a [GitHub repo][mirror] as a backup mirror just in case everything goes south. Everything's open source; go check it out! The result wouldn't be so *delectable* if not for [John Otander][john]'s awesome [Pixyll][pixyll] theme for Jekyll. Thanks for being cool, John.
 
