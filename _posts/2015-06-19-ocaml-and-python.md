@@ -1,8 +1,7 @@
 ---
 title: Fun(ction) with OCaml
 layout: post
-date: Wed Jun 17 19:14:02 EDT 2015
-summary: Unit testing and automating an OCaml project. Python helps!
+summary: Unit testing and automating an OCaml project. Better because of Python!
 ---
 
 I've loved functional programming ever since an elephant taught me Haskell[^1], but working with OCaml gave me heartburn.
@@ -11,13 +10,13 @@ I've loved functional programming ever since an elephant taught me Haskell[^1], 
 
 ## Two's Company
 
-As the second project for my Spring 2015 programming languages class, I was tasked with implementing a collection of OCaml functions, mostly operating on lists of lists of integers (the `int list list` type). My first obstacle was deciphering my professor's surprisingly cryptic specifications -- that is, I couldn't figure out immediately what each function's *function* was.
+As the second project for my Spring 2015 programming languages class, I had to implement a collection of OCaml functions that mostly operated on lists of lists of integers (the `int list list` type). My first obstacle was deciphering my professor's surprisingly cryptic specifications -- that is, I couldn't figure out immediately what each function's *function* was.
 
 Beyond the specification hid a huge testing script[^2], unhelpful because it only dumped sample input results without explicitly verifying anything, and would only run with a fully-implemented library. Output diffing was my [last project]({% post_url 2015-04-20-flexing-the-bison-chops %})'s salvation, but here... it wasn't as approachable a solution. I set to figuring out how to test that my functions *while* I was developing them, instead of all at once after I was finished.
 
-[^2]: Copying code out of PDFs is already less fun than it should be. It gets worse when you find lines that have flown off the page and into the infinite abyss. I'm glad my viewer was brave enough to bring them back when I ripped text from the entire page.
+[^2]: Copying code out of PDFs is already less fun than it should be; it gets worse when you find lines that have flown off the page and into the infinite abyss. I'm glad my viewer was bold enough to bring them back for me.
 
-As in the semester's first project, my professor ordered us to provide a log file of the OCaml interpreter, proving our functions valid for at least two inputs apiece. In other words: *way* more effort sunk into copy-and-paste than any good Python user should ever have to muster.
+As in the semester's first project, my professor ordered us to provide a log file of our work running in the OCaml interpreter, proving our functions valid for at least two inputs apiece. In other words: *way* more effort sunk into copy-and-paste than any good Python user should ever have to muster.
 
 There must be a way to minimize my efforts here.
 
@@ -93,7 +92,7 @@ OK
 
 ## Python Strikes!
 
-Python to the rescue! I bet that Python could make it easy to extract the unit tests' function calls, get the interpreter to run them one-by-one, and build a log out of their output -- and Python certainly could! Here's the code (what it does should be pretty intuitive):
+Python to the rescue! I guessed that Python could make it easy to extract the unit tests' function calls, get the interpreter to run them one-by-one, and build a log out of their output -- and Python certainly could! Here's the code (what it does should be pretty intuitive):
 
 ```python
 import re
@@ -179,7 +178,7 @@ echo 'Motion.tupledifffloat((5.0,4.0),(2.0, 5.0))' | ocaml motion.cmo -noprompt
 echo 'Motion.tupledifffloat((7.0,4.0),(9.0, 3.0))' | ocaml motion.cmo -noprompt
 ```
 
-Lightning strikes! OCaml springs to life:
+Lightning strikes! OCaml springs to life and the interpreter evaluates each query:
 
 ```
 - : float * float = (-3., 1.)
@@ -198,7 +197,7 @@ The good doctor stitches his creations together for the last time. They are... b
 
 ## In Closing
 
-Under the guidance of a simple Makefile that runs OUnit and the logging script, whatever functions I've verified are correct are automatically built into a log file. Perfect! For my sanity's sake, I also check the difference between the big testing script's real and correct outputs. I can relax while `make` zips up my project, `README` and logs, so what's to be learned from this whole ordeal?
+Under the guidance of a simple Makefile that runs OUnit and the logging script, whatever tests I've verified are correct are automatically built into a log file. Perfect! For my sanity's sake, I also made it check the difference between the big testing script's real and correct outputs. I can relax while `make` zips up my project, `README` and logs, so while I wait I can think: what's to be learned from this whole ordeal?
 
 After bashing my head in over my last project's shell scripting issues, using Python felt **spectacular**. I probably could have wrangled the same results with some tricky piping, but I bet it would have *hurt*. This project hardened my resolve to use Python scripts more often.
 
@@ -210,5 +209,4 @@ I mentioned heartburn all the way at the top of this page: I just didn't (and st
 
 [^4]: I had some trouble with floating point math. I felt a fool after my roommate informed me not only that algebraic operations on floating point numbers warrant a dot after the operator (`2.0 +. 2.0`), but also that my professor *explicitly* told us to be careful about it in class. I'm dumb.
 
-
-I earned another perfect score on this one. Great!
+This project earned me another perfect score. Great!
